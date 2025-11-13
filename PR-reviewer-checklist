@@ -1,25 +1,17 @@
 Title: feat(zk): implement zec_light_client with verifier integration and tests
 
-This PR replaces placeholder stubs with a working zec_light_client module that:
-- Verifies serialized ZEC header updates via an on‑chain verifier (or badge‑gated relayer logic).
-- Updates `verified_head` storage and emits `HeaderVerified` events.
-- Includes unit tests (cairo-test) and deterministic test vectors (specs/test_vectors).
-- Adds CI job to build/verifier smoke tests and uploads proof artifacts.
-
-Files added/changed:
-- cairo_modules/zec_light_client.cairo (implementation + view functions)
-- specs/zec_light_client.md (spec + threat model)
-- specs/test_vectors/*.bin (deterministic serialized headers)
-- tests/zec_light_client_test.cairo (unit tests)
-- .github/workflows/cairo-ci.yml (updated: add verifier-integration job)
-
 Reviewer checklist
-- [ ] Spec present and linked in code (specs/zec_light_client.md).
-- [ ] Unit tests pass locally and in CI.
-- [ ] Verifier accepts good proofs and rejects tampered proofs (see artifacts).
-- [ ] Proof artifacts uploaded to CI for auditor download.
-- [ ] At least two independent reviewers approve.
-- [ ] Governance signoff issue referenced if production activation is requested.
+- [ ] Spec present and linked: specs/zec_light_client.md
+- [ ] Unit tests: tests/zec_light_client_test.cairo (CI pass)
+- [ ] Compiled artifacts: compiled-contracts (Actions → Artifacts)
+- [ ] Test artifacts: test-results/combined_test_results.json
+- [ ] Proof artifacts: proof-artifacts (circuits job)
+- [ ] Verifier smoke tests: verifier-integration job (accepts good, rejects tampered)
+- [ ] At least two independent reviewers approve
+- [ ] Governance signoff referenced (issue #XXX) for production activation
 
-Notes
-- This PR requires circuit/verifier artifacts produced by the circuits CI job. See `.github/workflows` for details.
+How to reproduce smoke compile locally
+Linux (WSL/macOS):
+python3 -m pip install --user cairo-lang
+cairo-compile cairo_modules/example.cairo --output /tmp/example.json
+cairo-test cairo_modules/example.cairo --test-output /tmp/example_test.json
