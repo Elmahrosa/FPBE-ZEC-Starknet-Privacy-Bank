@@ -1,0 +1,61 @@
+name: Cairo CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python3-dev python3-pip
+
+      - name: Install Cairo
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install cairo-lang
+
+      - name: Compile Contracts
+        run: |
+          mkdir -p build
+          # compile each contract; adjust glob/path as needed
+          for f in src/*.cairo; do
+            cairo-compile "$f" --output build/"$(basename "$f" .cairo)".json --no-debug-info
+          done
+
+      - name: Run Tests
+        run: |
+          mkdir -p test-results
+          # run cairo-test per file or project; adjust to your test layout
+          for f in src/*.cairo; do
+            cairo-test "$f" --test-output=test-results/"$(basename "$f" .cairo)".json || true
+          done
+          jq -s '.' test-results/*.json > test-results/combined_test_results.json || true
+
+      - name: Static Analysis
+        run: |
+          # replace with your preferred linter if different
+          for f in src/*.cairo; do
+            cairo-lint "$f" || true
+          done
+
+      - name: Upload Compiled Contracts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-contracts
+          path: build/
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/combined_test_results.json
+
+      - name: Check Coverage (placeholder)
+        run: |
+          echo "Coverage: placeholder - add real coverage calculation step"
