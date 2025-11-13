@@ -28,3 +28,8 @@ FPBE-ZEC bridges Zcash and Starknet to enable privacy-first civic payments, stak
 
 ## 📯 Final Declaration
 This is not just a submission — it’s a resurrection.
+## 🏛️ Civic Governance
+
+This repository is governed by the Civic Blockchain Constitution.  
+All badge logic, contributor flows, and staking modules are enforced under Civic License terms.  
+See [CIC Governance Repo](https://github.com/Elmahrosa/International-Civic-Blockchain-Constitution)
