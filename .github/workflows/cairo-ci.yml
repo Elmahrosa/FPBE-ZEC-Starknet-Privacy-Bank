@@ -23,24 +23,21 @@ jobs:
       - name: Compile Contracts
         run: |
           mkdir -p build
-          # compile each contract; adjust glob/path as needed
-          for f in src/*.cairo; do
+          for f in cairo_modules/*.cairo; do
             cairo-compile "$f" --output build/"$(basename "$f" .cairo)".json --no-debug-info
           done
 
       - name: Run Tests
         run: |
           mkdir -p test-results
-          # run cairo-test per file or project; adjust to your test layout
-          for f in src/*.cairo; do
+          for f in cairo_modules/*.cairo; do
             cairo-test "$f" --test-output=test-results/"$(basename "$f" .cairo)".json || true
           done
           jq -s '.' test-results/*.json > test-results/combined_test_results.json || true
 
       - name: Static Analysis
         run: |
-          # replace with your preferred linter if different
-          for f in src/*.cairo; do
+          for f in cairo_modules/*.cairo; do
             cairo-lint "$f" || true
           done
 
