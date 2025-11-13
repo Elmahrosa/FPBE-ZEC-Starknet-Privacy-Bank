@@ -33,3 +33,13 @@ This is not just a submission — it’s a resurrection.
 This repository is governed by the Civic Blockchain Constitution.  
 All badge logic, contributor flows, and staking modules are enforced under Civic License terms.  
 See [CIC Governance Repo](https://github.com/Elmahrosa/International-Civic-Blockchain-Constitution)
+## 📯 Final Declaration  
+This is not just a submission — it’s a resurrection.
+
+## 🧭 Contributor Onboarding
+
+We’ve launched the FPBE-ZEC build sprint.  
+Cairo modules are scaffolded. Contributor roles are posted.  
+All collaborators must sign the civic petition and hold a verified badge.
+
+See [CIC Governance Repo](https://github.com/Elmahrosa/International-Civic-Blockchain-Constitution)
